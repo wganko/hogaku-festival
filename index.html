@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>全国邦楽合奏フェスティバルin高知</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', 'Yu Gothic', sans-serif;
+      background: #f5f0e8;
+      color: #333;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ===== ヘッダー ===== */
+    .header {
+      background: linear-gradient(135deg, #8B0000 0%, #C41E3A 50%, #8B0000 100%);
+      color: #fff;
+      text-align: center;
+      padding: 24px 16px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.3;
+    }
+    .header-sub {
+      font-size: 11px;
+      opacity: 0.85;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .header-title {
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      line-height: 1.4;
+      position: relative;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    }
+    .header-badge {
+      display: inline-block;
+      background: #FFD700;
+      color: #8B0000;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 4px 16px;
+      border-radius: 20px;
+      margin-top: 10px;
+      position: relative;
+    }
+
+    /* ===== 日程バナー ===== */
+    .date-banner {
+      background: #1a1a2e;
+      color: #fff;
+      text-align: center;
+      padding: 16px 12px;
+    }
+    .date-banner .year {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-bottom: 2px;
+    }
+    .date-banner .date-main {
+      font-size: 32px;
+      font-weight: bold;
+      color: #FFD700;
+      line-height: 1.2;
+    }
+    .date-banner .date-day {
+      font-size: 15px;
+      color: #FFD700;
+      margin-bottom: 4px;
+    }
+    .date-banner .venue {
+      font-size: 13px;
+      opacity: 0.85;
+      margin-top: 6px;
+    }
+
+    /* ===== 締切アラート ===== */
+    .alert-box {
+      background: #fff3cd;
+      border-left: 5px solid #ff8c00;
+      margin: 12px 12px 0;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      font-size: 13px;
+    }
+    .alert-box strong {
+      color: #C41E3A;
+      font-size: 14px;
+    }
+
+    /* ===== セクション共通 ===== */
+    .section {
+      margin: 14px 12px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .section-header {
+      padding: 12px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-header.red   { background: #C41E3A; }
+    .section-header.navy  { background: #1a3a5c; }
+    .section-header.green { background: #2d6a4f; }
+    .section-header.purple{ background: #5b2c8d; }
+    .section-header .icon { font-size: 20px; }
+
+    /* ===== コンサート情報 ===== */
+    .concert-info {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0e8e0;
+    }
+    .concert-info .time-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .concert-info .time-badge {
+      background: #C41E3A;
+      color: #fff;
+      font-size: 12px;
+      padding: 2px 10px;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+    .concert-info .free-badge {
+      background: #28a745;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 2px 10px;
+      border-radius: 12px;
+    }
+    .concert-info .venue-text {
+      font-size: 13px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* ===== 合同曲カード ===== */
+    .piece-card {
+      margin: 0 16px 12px;
+      border: 1px solid #e8d5c4;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .piece-card:first-of-type { margin-top: 12px; }
+    .piece-label {
+      background: #8B0000;
+      color: #FFD700;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .piece-body {
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+    .piece-title {
+      font-size: 15px;
+      font-weight: bold;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+    .piece-meta {
+      color: #666;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+    .piece-meta span {
+      display: inline-block;
+      background: #f5f0e8;
+      border-radius: 4px;
+      padding: 1px 6px;
+      margin: 1px 2px;
+    }
+
+    /* ===== ワークショップカード ===== */
+    .ws-card {
+      border-bottom: 1px solid #eee;
+      padding: 12px 16px;
+      display: flex;
+      gap: 10px;
+    }
+    .ws-card:last-child { border-bottom: none; }
+    .ws-label-col {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      background: #1a3a5c;
+      color: #FFD700;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ws-body { flex: 1; }
+    .ws-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #1a1a1a;
+      margin-bottom: 3px;
+    }
+    .ws-date-time {
+      font-size: 12px;
+      color: #C41E3A;
+      font-weight: bold;
+      margin-bottom: 3px;
+    }
+    .ws-instructor {
+      font-size: 12px;
+      color: #555;
+    }
+    .ws-note {
+      font-size: 11px;
+      color: #888;
+      margin-top: 3px;
+    }
+
+    /* ===== 特別演奏 ===== */
+    .special-item {
+      border-bottom: 1px solid #eee;
+      padding: 10px 16px;
+    }
+    .special-item:last-child { border-bottom: none; }
+    .special-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #5b2c8d;
+    }
+    .special-sub {
+      font-size: 12px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    /* ===== 参加費 ===== */
+    .fee-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      border-bottom: 1px solid #eee;
+    }
+    .fee-row:last-child { border-bottom: none; }
+    .fee-label { font-size: 13px; color: #333; }
+    .fee-amount {
+      font-size: 16px;
+      font-weight: bold;
+      color: #C41E3A;
+    }
+    .fee-note { font-size: 11px; color: #888; }
+
+    /* ===== 講師写真 ===== */
+    .photo-section {
+      margin: 14px 12px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .photo-header {
+      background: #2d4a1e;
+      color: #fff;
+      padding: 12px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .instructors-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .instructor-item {
+      text-align: center;
+      padding: 10px 6px 8px;
+      border-right: 1px solid #f0e8e0;
+      border-bottom: 1px solid #f0e8e0;
+    }
+    .instructor-item:nth-child(4n) { border-right: none; }
+    .instructor-item:nth-last-child(-n+4) { border-bottom: none; }
+    .instructor-photo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #C41E3A;
+      margin-bottom: 4px;
+      background: #f0e8e0;
+    }
+    .instructor-name {
+      font-size: 10px;
+      color: #333;
+      line-height: 1.3;
+    }
+    .instructor-role {
+      font-size: 9px;
+      color: #888;
+      margin-top: 1px;
+    }
+
+    /* ===== 特別企画 ===== */
+    .special-event-box {
+      margin: 14px 12px;
+      background: linear-gradient(135deg, #1a1a2e, #2d1b69);
+      border-radius: 12px;
+      padding: 16px;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .special-event-box .ev-badge {
+      display: inline-block;
+      background: #FFD700;
+      color: #1a1a2e;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 12px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    .special-event-box h3 {
+      font-size: 17px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    .special-event-box p {
+      font-size: 12px;
+      opacity: 0.85;
+      line-height: 1.7;
+    }
+
+    /* ===== 応募ボタン ===== */
+    .apply-section {
+      margin: 14px 12px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 16px;
+    }
+    .apply-section h3 {
+      font-size: 15px;
+      font-weight: bold;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #C41E3A;
+    }
+    .apply-btn {
+      display: block;
+      background: linear-gradient(135deg, #C41E3A, #8B0000);
+      color: #fff;
+      text-align: center;
+      padding: 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 12px rgba(196,30,58,0.3);
+      margin-bottom: 12px;
+    }
+    .apply-btn:active { opacity: 0.85; }
+    .apply-note {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.7;
+    }
+    .apply-note li {
+      list-style: none;
+      padding-left: 1em;
+      position: relative;
+    }
+    .apply-note li::before {
+      content: '※';
+      position: absolute;
+      left: 0;
+      color: #C41E3A;
+    }
+
+    /* ===== お問い合わせ ===== */
+    .contact-box {
+      margin: 14px 12px;
+      background: #f5f0e8;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #555;
+    }
+    .contact-box h3 {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 6px;
+    }
+    .contact-box a { color: #C41E3A; }
+
+    /* ===== フッター ===== */
+    .footer {
+      background: #1a1a1a;
+      color: #aaa;
+      text-align: center;
+      padding: 16px 12px;
+      font-size: 11px;
+      margin-top: 8px;
+    }
+    .footer a { color: #FFD700; }
+
+    /* ===== タグ ===== */
+    .tag {
+      display: inline-block;
+      background: #f5f0e8;
+      color: #8B0000;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid #e8d5c4;
+      margin: 2px;
+    }
+
+    /* ===== 龍馬シルエット装飾 ===== */
+    .ryoma-deco {
+      text-align: center;
+      padding: 8px;
+      color: #8B0000;
+      font-size: 11px;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<div class="header">
+  <div class="header-sub">第41回 国民文化祭　第26回 全国障害者芸術・文化祭</div>
+  <div class="header-title">全国邦楽合奏<br>フェスティバルin高知</div>
+  <div class="header-badge">🎵 参加者募集中！</div>
+</div>
+
+<!-- 日程バナー -->
+<div class="date-banner">
+  <div class="year">令和8年（2026年）</div>
+  <div class="date-main">10/24(土)・25(日)</div>
+  <div class="venue">📍 高知市文化プラザかるぽーと</div>
+</div>
+
+<!-- 締切アラート -->
+<div class="alert-box">
+  <strong>⏰ 応募締切：令和8年4月30日(木)必着</strong><br>
+  <span style="font-size:12px;">応募多数の場合、抽選となります。お早めにお申込みください。</span>
+</div>
+
+<!-- ===== 全国邦楽合奏コンサート ===== -->
+<div class="section">
+  <div class="section-header red">
+    <span class="icon">🎼</span>全国邦楽合奏コンサート
+  </div>
+  <div class="concert-info">
+    <div class="time-row">
+      <span class="time-badge">10/25(日) 13:30〜15:30</span>
+      <span class="free-badge">入場無料</span>
+    </div>
+    <div class="venue-text">📍 四国銀行ホール</div>
+  </div>
+
+  <!-- 合同曲A -->
+  <div class="piece-card">
+    <div class="piece-label">
+      <span>合同曲 A</span>
+      <span>🕛 12:00〜13:20（10/24講習）</span>
+    </div>
+    <div class="piece-body">
+      <div class="piece-title">「海鳥の詩」</div>
+      <div class="piece-meta">
+        作曲：江戸信吾（高知県三曲協会委嘱曲）<br>
+        <span>講師：松村エリナ（箏）</span>
+        <span>編成：箏2部・17弦・三弦・尺八</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 合同曲B -->
+  <div class="piece-card">
+    <div class="piece-label">
+      <span>合同曲 B</span>
+      <span>🕑 14:00〜15:20（10/24講習）</span>
+    </div>
+    <div class="piece-body">
+      <div class="piece-title">「和楽器で歌おう！やなせたかし作詞メドレー」</div>
+      <div class="piece-meta">
+        編曲：高橋久美子（委嘱初演）<br>
+        <span>講師：高橋久美子（作曲家）</span>
+        <span>編成：箏2部・17弦・尺八2部・三味線</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 合同曲C -->
+  <div class="piece-card" style="margin-bottom:14px;">
+    <div class="piece-label">
+      <span>合同曲 C</span>
+      <span>🕓 16:00〜17:20（10/24講習）</span>
+    </div>
+    <div class="piece-body">
+      <div class="piece-title">「邦楽器合奏のための『海の譜』」</div>
+      <div class="piece-meta">
+        作曲：高橋久美子（委嘱初演）<br>
+        <span>講師：稲田康（指揮）</span>
+        <span>編成：箏2部・17弦・尺八2部・三味線・琵琶・笛（八本）・打楽器</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 0 16px 14px; font-size: 12px; color: #666;">
+    ※複数選択可。聴講は有料（各5,000円）。<br>
+    ※各合同曲は講習を受け翌日のコンサートに出演できます（パート変更不可）。
+  </div>
+</div>
+
+<!-- ===== 特別演奏 ===== -->
+<div class="section">
+  <div class="section-header purple">
+    <span class="icon">⭐</span>特別演奏
+  </div>
+  <div class="special-item">
+    <div class="special-title">「手 事」</div>
+    <div class="special-sub">箏：砂崎知子　作曲：宮城道雄</div>
+  </div>
+  <div class="special-item">
+    <div class="special-title">「Becoming Water 尺八と二十絃のための」</div>
+    <div class="special-sub">作曲：マーティン・リーガン<br>箏：松村エリナ　尺八：田辺顗山</div>
+  </div>
+  <div class="special-item">
+    <div class="special-title">「民謡メドレー」</div>
+    <div class="special-sub">MIKAGE PROJECT（佐藤公基、浅野祥、本間貴士）</div>
+  </div>
+</div>
+
+<!-- ===== ワークショップ ===== -->
+<div class="section">
+  <div class="section-header navy">
+    <span class="icon">🎓</span>ワークショップ（複数選択可）
+  </div>
+  <div style="padding: 8px 16px; font-size: 12px; color: #555; background: #f8f6f0;">
+    📍 高知市文化プラザかるぽーと ギャラリー（7階）<br>
+    10/24(土)・25(日)
+  </div>
+
+  <div class="ws-card">
+    <div class="ws-label-col">D</div>
+    <div class="ws-body">
+      <div class="ws-title">田辺顗山 尺八奏法クリニック</div>
+      <div class="ws-date-time">📅 10月24日 12:00〜13:20</div>
+      <div class="ws-instructor">講師：田辺顗山（尺八）</div>
+      <div class="ws-note">各自尺八持参。ビブラート・正しい吹き方・音程の維持等</div>
+    </div>
+  </div>
+
+  <div class="ws-card">
+    <div class="ws-label-col">E</div>
+    <div class="ws-body">
+      <div class="ws-title">四万十川（砂崎知子作曲）&宮城曲の魅力</div>
+      <div class="ws-date-time">📅 10月24日 15:30〜16:50</div>
+      <div class="ws-instructor">講師：砂崎知子（箏・三弦）</div>
+      <div class="ws-note">楽器は大日本家庭音楽会よりご用意（聴講スタイル）</div>
+    </div>
+  </div>
+
+  <div class="ws-card">
+    <div class="ws-label-col">F</div>
+    <div class="ws-body">
+      <div class="ws-title">和楽器で民謡をアレンジ</div>
+      <div class="ws-date-time">📅 10月25日 9:10〜10:30</div>
+      <div class="ws-instructor">講師：MIKAGE PROJECT</div>
+      <div class="ws-note">地元の民謡をアレンジしよう。</div>
+    </div>
+  </div>
+
+  <div class="ws-card">
+    <div class="ws-label-col">G</div>
+    <div class="ws-body">
+      <div class="ws-title">龍馬になろう！（100均アイテムで作る三味線）</div>
+      <div class="ws-date-time">📅 10月25日 10:00〜11:30</div>
+      <div class="ws-instructor">講師：杵屋彌之吉</div>
+    </div>
+  </div>
+
+  <div class="ws-card">
+    <div class="ws-label-col">H</div>
+    <div class="ws-body">
+      <div class="ws-title">リトミックと初級指揮法入門</div>
+      <div class="ws-date-time">📅 10月25日 11:00〜12:20</div>
+      <div class="ws-instructor">講師：稲田康</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 参加費 ===== -->
+<div class="section">
+  <div class="section-header green">
+    <span class="icon">💰</span>参加費
+  </div>
+  <div class="fee-row">
+    <div>
+      <div class="fee-label">全国邦楽合奏コンサート（合同曲）</div>
+    </div>
+    <div class="fee-amount">各 5,000円</div>
+  </div>
+  <div class="fee-row">
+    <div>
+      <div class="fee-label">ワークショップ（D〜F・H）</div>
+    </div>
+    <div class="fee-amount">各 1,000円</div>
+  </div>
+  <div class="fee-row">
+    <div>
+      <div class="fee-label">ワークショップ G</div>
+      <div class="fee-note">別途材料費（1,000円程度）</div>
+    </div>
+    <div class="fee-amount">1,000円＋</div>
+  </div>
+  <div style="padding: 8px 16px 12px; font-size: 12px; color: #888;">
+    ※講習会およびワークショップ聴講は受付終了後に空きがあれば申込可。
+  </div>
+</div>
+
+<!-- ===== 講師紹介（写真） ===== -->
+<div class="photo-section">
+  <div class="photo-header">
+    <span>👩‍🎤</span> 講師・出演者
+  </div>
+  <div class="instructors-grid">
+    <div class="instructor-item">
+      <img src="photo_matsumura.jpg" alt="松村エリナ" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #C41E3A;margin:0 auto 4px;display:block;">
+      <div class="instructor-name">松村エリナ</div>
+      <div class="instructor-role">箏 / A</div>
+    </div>
+    <div class="instructor-item">
+      <img src="photo_takahashi.jpg" alt="高橋久美子" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #C41E3A;margin:0 auto 4px;display:block;">
+      <div class="instructor-name">高橋久美子</div>
+      <div class="instructor-role">作曲家 / B・C</div>
+    </div>
+    <div class="instructor-item">
+      <img src="photo_inada.jpg" alt="稲田康" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #C41E3A;margin:0 auto 4px;display:block;">
+      <div class="instructor-name">稲田康</div>
+      <div class="instructor-role">指揮 / C・H</div>
+    </div>
+    <div class="instructor-item">
+      <img src="photo_tanabe.jpg" alt="田辺顗山" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #C41E3A;margin:0 auto 4px;display:block;">
+      <div class="instructor-name">田辺顗山</div>
+      <div class="instructor-role">尺八 / D</div>
+    </div>
+    <div class="instructor-item">
+      <img src="photo_sunasaki.jpg" alt="砂崎知子" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #C41E3A;margin:0 auto 4px;display:block;">
+      <div class="instructor-name">砂崎知子</div>
+      <div class="instructor-role">箏・三弦 / E</div>
+    </div>
+    <div class="instructor-item">
+      <img src="photo_mikage.jpg" alt="MIKAGE PROJECT" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #C41E3A;margin:0 auto 4px;display:block;">
+      <div class="instructor-name">MIKAGE PROJECT</div>
+      <div class="instructor-role">F</div>
+    </div>
+    <div class="instructor-item">
+      <img src="photo_kineya.jpg" alt="杵屋彌之吉" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #C41E3A;margin:0 auto 4px;display:block;">
+      <div class="instructor-name">杵屋彌之吉</div>
+      <div class="instructor-role">三味線 / G</div>
+    </div>
+    <div class="instructor-item">
+      <img src="photo_tanaka.jpg" alt="田中隆文" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #C41E3A;margin:0 auto 4px;display:block;">
+      <div class="instructor-name">田中隆文</div>
+      <div class="instructor-role">邦楽ジャーナル</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 特別企画 ===== -->
+<div class="special-event-box">
+  <div class="ev-badge">✨ 特別企画</div>
+  <h3>邦楽未来コミット会議</h3>
+  <p>
+    📅 10月25日(日) 16:00〜17:20<br>
+    📍 四国銀行ホール<br><br>
+    江副淳一郎（TOPPAN）・藤本草（邦楽プロデューサー）<br>
+    吉田純子（文化庁）他<br>
+    司会：田中隆文（邦楽ジャーナル）<br><br>
+    巨大邦楽年表・虚無僧に変身など<br>
+    <strong style="color:#FFD700;">邦楽おもしろコーナー</strong>も同時開催！（会場ホワイエ 10:00〜15:30）
+  </p>
+</div>
+
+<!-- ===== 坂本龍馬（高知らしさ演出） ===== -->
+<div class="ryoma-deco">
+  🗿 坂本龍馬の地・高知でお会いしましょう！
+</div>
+
+<!-- ===== 応募方法 ===== -->
+<div class="apply-section">
+  <h3>📝 応募方法・申込先</h3>
+  <a href="https://www.zensokyo.org/fes/index.html" class="apply-btn">
+    🌐 公式サイトから申し込む
+  </a>
+  <ul class="apply-note">
+    <li>NPO法人全国邦楽奏者協会 Webサイトよりお申し込みください。</li>
+    <li>複数人まとめて申込の場合は事務局へメールでお問い合わせください。</li>
+    <li>メールタイトルは「全国邦楽フェス申込（お名前）」と付けてください。</li>
+    <li>レンタル楽器（箏・17弦のみ）は公式HPで必ずご確認ください。</li>
+    <li>楽譜は5月1日以降にホームページ（全奏協）でお知らせします。</li>
+    <li>合同曲B・CはHP上（5/1〜）、合同曲AとワークショップEは大日本家庭音楽会より購入。</li>
+  </ul>
+</div>
+
+<!-- ===== お問い合わせ ===== -->
+<div class="contact-box">
+  <h3>📬 問い合わせ先</h3>
+  「全国邦楽合奏フェスティバルin高知」実行委員会事務局<br>
+  e-mail：<a href="mailto:fes8@zensokyo.org">fes8@zensokyo.org</a>
+</div>
+
+<!-- ===== よさこい高知文化祭2026 ===== -->
+<div style="margin: 0 12px 14px; background: linear-gradient(135deg, #e8f4e8, #d4edda); border-radius: 12px; padding: 14px 16px; border: 1px solid #a8d5a2;">
+  <div style="font-size: 12px; color: #2d6a4f; font-weight: bold; margin-bottom: 4px;">🌸 同時開催</div>
+  <div style="font-size: 15px; font-weight: bold; color: #1a3a2a;">よさこい高知文化祭2026</div>
+  <div style="font-size: 12px; color: #555; margin-top: 4px;">令和8年10月25日(日)〜12月6日(日)</div>
+</div>
+
+<!-- フッター -->
+<div class="footer">
+  主催：文化庁・厚生労働省・高知県・よさこい高知文化祭2026高知県実行委員会 他<br>
+  <a href="https://www.zensokyo.org/fes/index.html">🔗 www.zensokyo.org/fes/index.html</a><br><br>
+  © 全国邦楽合奏フェスティバルin高知 実行委員会
+</div>
+
+</body>
+</html>
